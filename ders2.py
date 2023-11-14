@@ -46,9 +46,11 @@ for _ in range(10): # tekrar değeri önemli değilse _ verierek gereksiz ram ku
     break # döngüyü bitirecek
 
 # while expression
-
-while message != 'quit' # sadece değeri kontrol ediyor
-while message is not 'quit' # aynı obje mi diye bakıyor
+message = ''
+while message != 'quit':
+    pass # sadece değeri kontrol ediyor
+while message is not 'quit':
+    pass  # aynı obje mi diye bakıyor
 
 # python [-5, 256] ya kadar olan tam sayıları önceden kendisi memory'e kayıt eder ancak sonraki sayıları biz kendimiz obje olarak ekleriz
 print('{} + {} = {}'.format(2,3,'five'))
