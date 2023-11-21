@@ -3,7 +3,7 @@ colors = ['r', 'g', 'b', 'p', 'y', 'c']
 izin_verilen_harfler = set('rgbpyc')
 picked = [{place: random.choice(colors) for place in range(1, 5)}]
 
-print(picked)
+print("program seçimini yaptı")
 def kirmizi(liste1, liste2):
     eslesme_sayaci = 0
     for kutuphane1, kutuphane2 in zip(liste1, liste2):
