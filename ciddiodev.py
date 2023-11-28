@@ -9,7 +9,7 @@ def on_click(event):
             result = str(eval(expression))
             screen.set(result)
         except Exception as e:
-            screen.set("Hata")
+            screen.set("düzgün seyler yaz ben sadece bir hesap makinesiyim")
     elif text == "C":
         screen.set("")
     else:
@@ -21,7 +21,7 @@ root = tk.Tk()
 root.title("Hesap Makinesi")
 
 screen = tk.StringVar()
-entry = tk.Entry(root, textvar=screen, bd=10, insertwidth=4, width=30, justify='right')
+entry = tk.Entry(root, textvar=screen, bd=10, insertwidth=4, width=40, justify='right', background='pink')
 entry.grid(row=0, column=0, columnspan=4)
 
 button_texts = [
@@ -37,7 +37,7 @@ sutun = 0
 
 for button_text in button_texts:
     if button_text:
-        button = tk.Button(root, text=button_text, padx=20, pady=20, bd=8)
+        button = tk.Button(root, text=button_text, padx=20, pady=20, bd=8, background='white')
         button.grid(row=satır, column=sutun)
         button.bind("<Button-1>", on_click)
     sutun += 1
