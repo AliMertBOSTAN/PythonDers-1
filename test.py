@@ -12,42 +12,53 @@ class RenkTahminOyunu:
         self.tahmin_hakki = 10
         self.tahminler = []
 
-        self.label = tk.Label(master, text="Renkleri harf harf girin ve tahmin edin:")
-        self.label.pack(pady=10)
+        self.frame = tk.Frame(master)
+        self.frame.pack(pady=10, padx=10)
 
-        self.entry = tk.Entry(master, width=30)
-        self.entry.pack(pady=10)
-
-        self.tahmin_button = tk.Button(master, text="Tahmin Et", command=self.tahmin_et)
-        self.tahmin_button.pack(pady=10)
-
-        self.tahmin_hakki_label = tk.Label(master, text=f"Kalan Tahmin Hakkı: {self.tahmin_hakki}")
-        self.tahmin_hakki_label.pack(pady=10)
-
-        self.guide_label = tk.Label(master, text=self.renk_guide(), font=("Arial", 12, "bold"))
-        self.guide_label.pack(pady=10)
-
-        self.canvas = tk.Canvas(master, width=400, height=300)
-        self.canvas.pack(pady=10, padx=10)
-
-        self.tahmin_canvas = tk.Canvas(master, width=400, height=400)
+        self.tahmin_canvas = tk.Canvas(self.frame, width=400, height=400)
         self.tahmin_canvas.pack(pady=10, padx=10, side=tk.LEFT)
+
+        self.canvas = tk.Canvas(self.frame, width=400, height=300)
+        self.canvas.pack(pady=10, padx=10, side=tk.LEFT)
+
+        self.label = tk.Label(self.frame, text="Renkleri harf harf girin ve tahmin edin:")
+        self.label.pack(pady=10, padx=10, side=tk.LEFT)
+
+        self.entry = tk.Entry(self.frame, width=30)
+        self.entry.pack(pady=10, padx=10, side=tk.LEFT)
+
+        self.tahmin_button = tk.Button(self.frame, text="Tahmin Et", command=self.tahmin_et)
+        self.tahmin_button.pack(pady=10, padx=10, side=tk.LEFT)
+
+        self.tahmin_hakki_label = tk.Label(self.frame, text=f"Kalan Tahmin Hakkı: {self.tahmin_hakki}")
+        self.tahmin_hakki_label.pack(pady=10, padx=10, side=tk.LEFT)
+
+        self.guide_label = tk.Label(self.frame, text=self.renk_guide(), font=("Arial", 12, "bold"))
+        self.guide_label.pack(pady=10, padx=10, side=tk.LEFT)
 
         self.olustur_daireler()
 
     def olustur_daireler(self):
-        renkler = {"s": "black", "y": "yellow", "m": "magenta", "g": "green", "o": "orange", "b": "brown"}
+        renkler = {"k": "black", "y": "yellow", "m": "magenta", "s": "green", "o": "orange", "t": "brown"}
+
+        for i in range(10):
+            x_start_tahmin = 20
+            y_start_tahmin = 20 + (i * 40)
+
+            for j in range(4):
+                self.tahmin_canvas.create_oval(x_start_tahmin, y_start_tahmin, x_start_tahmin + 30, y_start_tahmin + 30, outline="black", width=2, fill="gray")
+                x_start_tahmin += 40
 
         for i in range(10):
             x_start = 20
             y_start = 20 + (i * 40)
 
             for j in range(4):
-                self.tahmin_canvas.create_oval(x_start, y_start, x_start + 30, y_start + 30, outline="black", width=2)
+                self.canvas.create_oval(x_start, y_start, x_start + 30, y_start + 30, outline="black", width=2, fill="gray")
                 x_start += 40
 
     def renk_sec(self):
-        renkler = ["s", "y", "m", "g", "o", "b"]
+        renkler = ["k", "y", "m", "s", "o", "t"]
         return random.sample(renkler, 4)
 
     def tahmin_et(self):
@@ -81,13 +92,20 @@ class RenkTahminOyunu:
         return sonuc
 
     def tahminleri_goster(self, tahmin, sonuc):
-        renkler = {"s": "black", "y": "yellow", "m": "magenta", "g": "green", "o": "orange", "b": "brown"}
-        x_start = 420
-        y_start = 20 + (len(self.tahminler) * 50)
+        renkler = {"k": "black", "y": "yellow", "m": "magenta", "s": "green", "o": "orange", "t": "brown"}
+        x_start_tahmin = 20
+        y_start_tahmin = 20 + (len(self.tahminler) * 40)
 
         for renk in tahmin:
-            self.canvas.create_oval(x_start, y_start, x_start + 40, y_start + 40, fill=renkler[renk])
-            x_start += 50
+            self.tahmin_canvas.create_oval(x_start_tahmin, y_start_tahmin, x_start_tahmin + 30, y_start_tahmin + 30, fill=renkler[renk], outline="black", width=2)
+            x_start_tahmin += 40
+
+        x_start = 20
+        y_start = 20 + (len(self.tahminler) * 40)
+
+        for renk in tahmin:
+            self.canvas.create_oval(x_start, y_start, x_start + 30, y_start + 30, fill=renkler[renk], outline="black", width=2)
+            x_start += 40
 
         self.canvas.create_text(x_start + 20, y_start + 20, text=f"{sonuc['siyah']}/{sonuc['beyaz']}", font=("Arial", 10, "bold"))
 
@@ -97,17 +115,17 @@ class RenkTahminOyunu:
         guide_text = "Renk Rehberi:\n"
         for renk in self.gizli_renkler:
             guide_text += f"{renk}: "
-            if renk == "s":
+            if renk == "k":
                 guide_text += "Siyah"
             elif renk == "y":
                 guide_text += "Sarı"
             elif renk == "m":
                 guide_text += "Magenta"
-            elif renk == "g":
+            elif renk == "s":
                 guide_text += "Yeşil"
             elif renk == "o":
                 guide_text += "Turuncu"
-            elif renk == "b":
+            elif renk == "t":
                 guide_text += "Kahverengi"
             guide_text += "\n"
         return guide_text
